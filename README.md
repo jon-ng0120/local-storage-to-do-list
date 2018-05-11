@@ -1,0 +1,1 @@
+A simple, mobile responsive to do list app using only pure vanilla JavaScript and local storage to store and remember items that were entered. 

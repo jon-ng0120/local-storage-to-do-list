@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #00284d;
+}
+
+.wrapper {
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#clock {
+  font-weight: normal;
+  font-size: 60px;
+  color: silver;
+  margin-bottom: 0;
+}
+
+#date {
+  color: silver;
+  font-size: 1.1rem;
+  padding-bottom: 9px;
+  border-bottom: 1px solid;
+}
+
+#main-form {
+  color: red;
+  margin: auto;
+  margin-top: 20px;
+}
+
+form {
+  background: white;
+  border-radius: 5px;
+  display: flex;
+}
+
+form input[type="text"] {
+  padding: 12px;
+  width: 100%;
+  font-size: 1.15em;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  flex: 90%;
+}
+
+form button {
+  border-radius: 0 5px 5px 0;
+  border: none;
+  background: white;
+  color: #BEBEBE;
+  font-size: 1.4em;
+  font-weight: bold;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+ul {
+  margin: auto;
+  margin-top: 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+ul li {
+  list-style: none;
+  background: #fff;
+  font-size: 1.1em;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-left: 7px solid #ADABAB;
+  word-break: break-all;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+li span {
+  padding-left: 10px;
+  padding-right: 10px;
+  flex: 1;
+}
+
+li input[type="checkbox"] {
+  margin-left: 10px;
+  margin-right: 0;
+}
+.remove {
+  border: none;
+  background: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #BEBEBE;
+  margin-right: 10px;
+}
+
+form button:hover,
+.remove:hover {
+  cursor: pointer;
+  color: #808080;
+}
+
+.checked {
+  border-left: 7px solid #03A92D;
+  opacity: .8;
+}
+
+.checked span {
+  text-decoration: line-through;
+  color: #808080;
+}
+  
+/* Media Queries */
+@media (min-width: 750px) {
+  .wrapper {
+    width: 95%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    width: 85%;
+  }
+}
+
+@media (min-width: 1240px) {
+  .wrapper {
+    width: 50%;
+    margin-top: 160px;
+  }
+
+  #main-form {
+    margin-top: 80px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .wrapper {
+    width: 25%;
+  }
+}
