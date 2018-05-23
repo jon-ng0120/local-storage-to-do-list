@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitButton = form.querySelector('button');
   const ul = document.querySelector('.main ul');
   const input = form.querySelector('input');
+  const clearButton = mainForm.querySelector('#clear-button');
   
+  // Function to display time on screen 
   const displayClock = () => {
     const timeDate = new Date();
     const clock = document.querySelector("#clock");
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let hours = timeDate.getHours() % 12;
     let minutes = timeDate.getMinutes();
-    let seconds = timeDate.getSeconds();
+    let dayOrNight = '';
     
     if (hours.toString().length < 2) {
       hours = '0' + hours;
@@ -21,15 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (minutes.toString().length < 2) {
       minutes = '0' + minutes;
     }
-    
-    if (seconds.toString().length < 2) {
-      seconds = '0' + seconds;
+
+    if (timeDate.getHours() <= 12) {
+      dayOrNight = 'AM';
+    } else {
+      dayOrNight = 'PM';
     }
     
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const today = days[timeDate.getDay()];
     
-    const clockOutput = hours + ' : ' + minutes + ' . ' + seconds;
+    const clockOutput = hours + ' : ' + minutes + ' ' + dayOrNight;
     const dateOutput = 'Looks like another ' + today;
     
     clock.textContent = clockOutput;
@@ -42,15 +46,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   
-  
-  
-  let itemsArray;
+  // Code for creating list items and giving functionality begins here  
+
+
+  // Create an array for list items to be stored for local storage
+  let itemsArray; 
   if (localStorage.getItem('items') === null) {
     itemsArray = [];
   } else {
     itemsArray = JSON.parse(localStorage.getItem('items'));
   }
   
+  // Create an array for checked list items to be stored for local storage
   let checkedArray;
   if (localStorage.getItem('checked') === null) {
     checkedArray = [];
@@ -62,6 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const errorMessage = document.createElement('p');
   mainForm.appendChild(errorMessage);
   
+  // Function to set list items to local storage
+  const setLocalStorage = (key, array) => {
+    return localStorage.setItem(key, JSON.stringify(array));
+  }
+
   // Submit task into input field
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -69,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
       errorMessage.textContent = 'Please enter a task';
     } else {
       itemsArray.push(input.value);
-      localStorage.setItem('items', JSON.stringify(itemsArray));
+      setLocalStorage('items', itemsArray);
       createListContent(input.value);
       input.value = '';
       errorMessage.textContent = ''; 
@@ -86,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createButtons(li);
   }
   
-  // Create and attach buttons onto list items
+  //Create and attach buttons onto list items
   const createButtons = li => {
     const listItem = li.firstElementChild;
     const checkbox = document.createElement('input');
@@ -99,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     li.insertBefore(removeButton, listItem.nextElementSibling);
   }
   
-  // Give functionality to the delete list item button
+  // Give functionality to the delete button
   ul.addEventListener('click', (e) => {
     if (e.target.className === 'remove') {
       const li = e.target.parentNode;
@@ -109,19 +121,27 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let i = 0; i < itemsArray.length; i++) {
         if (liItemName === itemsArray[i]) {
           itemsArray.splice(i, 1);
-          localStorage.setItem('items', JSON.stringify(itemsArray));
+          setLocalStorage('items', itemsArray);
         }
       }
       
       for (let i = 0; i < checkedArray.length; i++) {
          if (liItemName === checkedArray[i]) {
           checkedArray.splice(i, 1);
-          localStorage.setItem('checked', JSON.stringify(checkedArray));
+          setLocalStorage('checked', checkedArray);
         }
       }
     }
   });
   
+  // Clear list items on screen
+  clearButton.addEventListener('click', (e) => {
+    ul.innerHTML = '';
+    // Clear items on local storage array
+    itemsArray = [];
+    setLocalStorage('items', itemsArray);
+  })
+
   // Apply a class on checked list items
   ul.addEventListener('change', (e) => {
     const li = e.target.parentNode;
@@ -129,13 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.checked) {
       li.className = 'checked';
       checkedArray.push(liItemName);
-      localStorage.setItem('checked', JSON.stringify(checkedArray));
+      setLocalStorage('checked', checkedArray);
     } else {
       li.className = '';
       for (let i = 0; i < checkedArray.length; i++) {
         if (liItemName === checkedArray[i]) {
           checkedArray.splice(i, 1);
-          localStorage.setItem('checked', JSON.stringify(checkedArray));
+          setLocalStorage('checked', checkedArray);
         }
       }
     }
