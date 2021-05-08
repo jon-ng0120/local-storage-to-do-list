@@ -1,3 +1,5 @@
+'use strict'
+
 document.addEventListener('DOMContentLoaded', () => {
   const mainForm = document.querySelector('#main-form');
   const form = document.querySelector('form');
